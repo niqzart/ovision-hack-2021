@@ -2,7 +2,7 @@ version: "3.7"
 services:
 
   backend:
-    image: ${CI_REGISTRY_IMAGE-registry.gitlab.com/vitalymegabyte/unknown_hack/}frontend:${TAG-latest}
+    image: ${CI_REGISTRY_IMAGE-registry.gitlab.com/vitalymegabyte/unknown_hack}/frontend:${TAG-latest}
     build: ./backend
     ports:
       - "5000:5000"
@@ -11,7 +11,7 @@ services:
         condition: on-failure
 
   frontend:
-    image: ${CI_REGISTRY_IMAGE-registry.gitlab.com/vitalymegabyte/unknown_hack/}backend:${TAG-latest}
+    image: ${CI_REGISTRY_IMAGE-registry.gitlab.com/vitalymegabyte/unknown_hack}/backend:${TAG-latest}
     build: ./frontend
     ports:
       - "80:80"
