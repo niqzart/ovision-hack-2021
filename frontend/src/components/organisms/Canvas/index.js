@@ -19,22 +19,16 @@ function scaleChildFitParentMaxWidthOrHeight(child) {
     child.height *= scalePercent;
 }
 
-const profileImageDim = 150;
+const profileImageDim = 200;
 
 function fillTransformedSegments(container, video, faceDimensions) {
-    for (let i = faceDimensions.length; i < container.childElementCount; ++i) {
-        container.removeChild(container.children[i]);
-    }
-    for (let i = container.childElementCount; i < faceDimensions.length; ++i) {
-        container.appendChild(document.createElement("canvas"));
-    }
+    container.width = profileImageDim;
+    container.height = profileImageDim * faceDimensions.length;
+    const context = container.getContext("2d");
     for (let i = 0; i < faceDimensions.length; ++i) {
         const iFace = faceDimensions[i];
-        container.children[i].setAttribute("width", profileImageDim);
-        container.children[i].setAttribute("height", profileImageDim);
-        let context = container.children[i].getContext("2d");
         context.drawImage(video, iFace.topLeftX, iFace.topLeftY, iFace.width, iFace.height,
-            0, 0, profileImageDim, profileImageDim);
+            0, profileImageDim * i, profileImageDim, profileImageDim);
     }
 }
 
@@ -57,7 +51,7 @@ function drawRectangleVideo(canvas, video, faceDimensions) {
 async function processVideo(container, video, canvas) {
     let faceDimensions = await getFaceCoordinates(video);
     drawRectangleVideo(canvas, video, faceDimensions)
-    // fillTransformedSegments(container, video, faceDimensions);
+    fillTransformedSegments(container, video, faceDimensions);
 }
 
 
@@ -107,7 +101,7 @@ class Canvas extends React.Component {
 
     render() {
         return <div className="canvas-container" >
-            <div id="container" ref={this.container}/>
+            <canvas id="container" ref={this.container}/>
             <video id="video" className="canvas-container__video" ref={this.video}/>
             <canvas id="canvas" className="canvas-container__canvas" ref={this.canvas}/>
         </div>;

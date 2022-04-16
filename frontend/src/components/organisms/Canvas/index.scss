@@ -1,5 +1,12 @@
 #container {
-  display: none;
+  position: absolute;
+  z-index: -100;
+  flex-direction: column;
+  width: 200px;
+  * {
+    position:relative;
+    z-index: -99;
+  }
 }
 
 .canvas-container {

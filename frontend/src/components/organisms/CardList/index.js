@@ -7,7 +7,7 @@ import "./index.scss";
 import Card from "../Card"
 
 
-const CardList = (cardListData) => {
+const CardList = () => {
     const cardStore = useStore($cardStore);
 
     const cardList = cardStore.map(card => {

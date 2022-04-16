@@ -2,12 +2,13 @@ import React from 'react';
 
 import "./index.scss";
 
+// import femaleLogo from "../../../assets/"
 
 const GenderImage = ({gender}) => {
     let image_path;
     switch (gender) {
         case "male": {
-            image_path = "path-1";
+            image_path = "../";
             break;
         }
         case "female" : {
@@ -21,7 +22,8 @@ const GenderImage = ({gender}) => {
     image_path = "";
 
     return (
-        <img className="card__gender-image" src={image_path} />
+        // <img className="card__gender-image" src="../" />
+        <span>{gender}</span>
     );
 }
 
