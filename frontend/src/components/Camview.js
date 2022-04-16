@@ -2,73 +2,82 @@ import React from 'react';
 import * as tf from '@tensorflow/tfjs'
 const blazeface = require('@tensorflow-models/blazeface');
 
+let model;
+
+class FaceData {
+    constructor(w, h, tlx, tly) {
+        this.topLeftX = tlx;
+        this.topLeftY = tly;
+        this.width = w;
+        this.height = h;
+    }
+    width;
+    height;
+    topLeftX;
+    topLeftY;
+}
+
+async function getFaceCoordinates(video) {
+    console.log(video)
+    if (!model) model = await blazeface.load();
+    const returnTensors = false;
+    const predictions = await model.estimateFaces(video, returnTensors);
+    let faceDimensions = [];
+    if (predictions.length > 0) {
+        for (let i = 0; i < predictions.length; i++) {
+            const start = predictions[i].topLeft;
+            const end = predictions[i].bottomRight;
+            const x = end[0] - start[0];
+            const y = end[1] - start[1];
+            const tlx = predictions[i].topLeft[0];
+            const tly = predictions[i].topLeft[1];
+            faceDimensions.push(new FaceData(x,y, tlx, tly))
+        }
+    }
+    return faceDimensions;
+}
+
 class Camview extends React.Component {
-    model;
-    draw = async function draw(video, context, width, height) {
-            console.log(video);
-            context.drawImage(video, 0, 0, width, height);
-            if (!video.model) video.model = await blazeface.load();
-            const returnTensors = false;
-            const predictions = await video.model.estimateFaces(video, returnTensors);
-            if (predictions.length > 0) {
-                console.log(predictions);
-                for (let i = 0; i < predictions.length; i++) {
-                    const start = predictions[i].topLeft;
-                    const end = predictions[i].bottomRight;
-                    const probability = predictions[i].probability;
-                    const size = [end[0] - start[0], end[1] - start[1]];
-                    // Render a rectangle over each detected face.
-                    context.beginPath();
-                    context.strokeStyle = "green";
-                    context.lineWidth = "4";
-                    context.rect(start[0], start[1], size[0], size[1]);
-                    context.stroke();
-                    const prob = (probability[0] * 100).toPrecision(5).toString();
-                    const text = prob + "%";
-                    context.fillStyle = "red";
-                    context.font = "13pt sans-serif";
-                    context.fillText(text, start[0] + 5, start[1] + 20);
-                }
-            }
-            setTimeout(draw, 250, video, context, width, height);
-        };
+    constructor(props) {
+        super(props);
+        this.video = React.createRef();
+        this.canvas = React.createRef();
+    }
 
     componentDidMount() {
-        let video = document.getElementById('video');
-        let canvas = document.getElementById('canvas');
-        let context = canvas.getContext('2d')
-        let photo = document.getElementById('photo');
-        let startbutton = document.getElementById('startbutton');
-        let current = this;
+        // let video = document.getElementById('video');
+        // let canvas = document.getElementById('canvas');
+        // let context = canvas.getContext('2d')
+        // let photo = document.getElementById('photo');
+        // let startbutton = document.getElementById('startbutton');
+        const object = this;
         navigator.mediaDevices.getUserMedia({video: true, audio: false})
             .then(function (stream) {
-                video.srcObject = stream;
-                console.log(stream);
-                video.play();
-                video.addEventListener('play',function() {
-                    current.draw(this, context, this.clientWidth, this.clientHeight).catch(e => console.log(e));
+                console.log(object.video.current);
+                object.video.current.srcObject = stream;
+                object.video.current.play();
+                object.video.current.addEventListener('play',function() {
+                    getFaceCoordinates(object.video.current)
+                        .then(v => console.log(v))
+                        .catch(e => console.log(e));
                 }, false);
             })
             .catch(function (err) {
-                console.log("An error occurred: " + err);
+                console.log("An error occurred there: " + err);
             });
     }
 
     componentWillUnmount() {
-        let video = document.getElementById('video');
-        let canvas = document.getElementById('canvas');
-        let context = canvas.getContext('2d')
-        let current = this;
-        video.removeEventListener('play', function() {
-            current.draw(this, context, this.clientHeight, this.clientWidth).catch(e => console.log(e)); },
+        this.video.current.removeEventListener('play', function() {
+            getFaceCoordinates(this).catch(e => console.log(e)); },
             false);
     }
 
     render() {
         return <div class="camera">
             <button id="startbutton">Take photo</button>
-            <video id="video" height="480" width="640"/>
-            <canvas id="canvas" height="480" width="640"/>
+            <video id="video" height="480" width="640" ref={this.video}/>
+            <canvas id="canvas" height="480" width="640" ref={this.canvas}/>
         </div>;
     }
 }
