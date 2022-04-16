@@ -1,16 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './logo.svg'
+import './App.css'
 import Camview from './components/Camview.js'
+import { useSocketIO } from './utils/effects'
 
-function App() {
+
+function AppInner({ socket }) {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Camview/>
+        <Camview />
       </header>
     </div>
   );
 }
 
-export default App;
+function App() {
+  const socket = useSocketIO()
+  return <AppInner socket={socket} />
+}
+
+export default App
