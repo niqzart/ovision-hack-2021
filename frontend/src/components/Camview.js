@@ -18,7 +18,6 @@ class FaceData {
 }
 
 async function getFaceCoordinates(video) {
-    console.log(video)
     if (!model) model = await blazeface.load();
     const returnTensors = false;
     const predictions = await model.estimateFaces(video, returnTensors);
@@ -37,6 +36,7 @@ async function getFaceCoordinates(video) {
     return faceDimensions;
 }
 
+
 class Camview extends React.Component {
     constructor(props) {
         super(props);
@@ -44,23 +44,19 @@ class Camview extends React.Component {
         this.canvas = React.createRef();
     }
 
+    handleFaceCoordinates = (event) => {
+        getFaceCoordinates(event.target)
+            .then(v => console.log(v))
+            .catch(e => console.log(e));
+    }
+
     componentDidMount() {
-        // let video = document.getElementById('video');
-        // let canvas = document.getElementById('canvas');
-        // let context = canvas.getContext('2d')
-        // let photo = document.getElementById('photo');
-        // let startbutton = document.getElementById('startbutton');
+        this.video.current.addEventListener('play', this.handleFaceCoordinates, false);
         const object = this;
         navigator.mediaDevices.getUserMedia({video: true, audio: false})
             .then(function (stream) {
-                console.log(object.video.current);
                 object.video.current.srcObject = stream;
                 object.video.current.play();
-                object.video.current.addEventListener('play',function() {
-                    getFaceCoordinates(object.video.current)
-                        .then(v => console.log(v))
-                        .catch(e => console.log(e));
-                }, false);
             })
             .catch(function (err) {
                 console.log("An error occurred there: " + err);
@@ -68,9 +64,7 @@ class Camview extends React.Component {
     }
 
     componentWillUnmount() {
-        this.video.current.removeEventListener('play', function() {
-            getFaceCoordinates(this).catch(e => console.log(e)); },
-            false);
+        this.video.current.removeEventListener('play', this.handleFaceCoordinates, false);
     }
 
     render() {
