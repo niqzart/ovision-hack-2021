@@ -18,7 +18,9 @@ export function useSocketIO() {
 
 export function useListen(socket, event, handler, deps) {
   useEffect(() => {
-    socket.on(event, handler)
-    return () => socket.off(event, handler)
+    if (socket) {
+      socket.on(event, handler)
+      return () => socket.off(event, handler)
+    }
   }, deps)
 }
