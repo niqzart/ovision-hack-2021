@@ -12,11 +12,11 @@ import BodypartList from "../../molecules/BodypartList";
 const Card = ({profileImage, gender, emotion, age}) => {
     return (
         <div className="card">
-            <Age age={age} />
-            <EmotionStatus emotion={emotion} />
-            <GenderImage gender={gender} />
-            <ProfileImage profileImage={profileImage} />
-            <BodypartList />
+            <Age className="card__age" age={age} />
+            <EmotionStatus className="card__emotion" emotion={emotion} />
+            <GenderImage className="card__gender-image" gender={gender} />
+            <ProfileImage className="card__profile-image" profileImage={profileImage} />
+            <BodypartList className={"card__bodypart-list"}/>
         </div>
     );
 }

@@ -5,18 +5,52 @@
   width: 500px;
   background-position: -900px -50px;
   background-size: 1500px;
-  padding: 10px;
+  padding: 20px 25px 40px 25px;
 
   &__age {
     position: absolute;
-
+    display: inline-block;
+    bottom: 70px;
+    right: 60px;
+    font-family: "Orbitron", serif;
+    font-weight: bold;
+    color: deepskyblue;
+    font-size: 3em;
+    text-shadow: deepskyblue 0 0 6px;
   }
   &__emotion {
     position: absolute;
-
+    font-family: "Orbitron", serif;
+    bottom: 75px;
+    left: 70px;
+    font-size: 1.8em;
+    font-weight: bold;
+    background-color: deepskyblue;
+    border-radius: 20px;
+    padding: 8px 14px;
+    color: #212c36;
+    text-shadow: #a551d5 0 1px 1px;
+    border: 1px solid #a551d5;
   }
   &__profile-image {
     position: absolute;
-
+  }
+  &__gender-image {
+    position: absolute;
+    font-family: "Orbitron", serif;
+  }
+  &__bodypart-list {
+    position: absolute;
+    font-family: "Orbitron", serif;
+    right: 57px;
+    bottom: 145px;
+    opacity: 0.8;
+    * {
+      display: block;
+      color: white;
+      text-align: right;
+      margin: 5px;
+      font-size: 1.8em;
+    }
   }
 }

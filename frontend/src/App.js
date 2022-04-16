@@ -1,7 +1,6 @@
 import {useListen, useSocketIO} from "./utils/effects";
 import Main from "./components/pages/Main";
 
-import "./components/templates/resets.scss";
 import './App.scss';
 
 function AppInner({ socket }) {
