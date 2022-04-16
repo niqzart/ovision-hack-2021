@@ -16,8 +16,13 @@ before_script:
 
 build:
   stage: build
-  variables:
-    TAG: ${CI_COMMIT_SHA}
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      variables:
+        TAG: latest
+    - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
+      variables:
+        TAG: ${CI_COMMIT_REF_NAME}
   script:
     - docker-compose build
     - docker-compose push
