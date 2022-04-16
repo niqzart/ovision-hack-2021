@@ -16,10 +16,21 @@ class FaceData {
     topLeftY;
 }
 
+export async function getTransformedImageFromVideo(image_container, video, width, height) {
+    let faceDimensions = await getFaceCoordinates(video);
+    for (let i = 0; i < faceDimensions.length; ++i) {
+        const iFace = faceDimensions[i];
+        let canvas = document.createElement("canvas");
+        canvas.setAttribute("width", width);
+        canvas.setAttribute("height", height);
+        let context = canvas.getContext("2d");
+        context.drawImage(video, iFace.topLeftX, iFace.topLeftY, iFace.width, iFace.height, 0, 0, width, height);
+        image_container.appendChild(canvas);
+    }
+}
+
 
 export async function getFaceCoordinates(video) {
-    const inc_y = 1.6;
-    const mov_down_y = 0.3
     if (!model) model = await blazeface.load();
     const returnTensors = false;
     const predictions = await model.estimateFaces(video, returnTensors);
@@ -29,9 +40,9 @@ export async function getFaceCoordinates(video) {
             const start = predictions[i].topLeft;
             const end = predictions[i].bottomRight;
             const x = end[0] - start[0];
-            const y = (end[1] - start[1]) * inc_y;
-            const tlx = start[0];
-            const tly = (start[1]) - (y * (inc_y - 1 - mov_down_y));
+            const y = end[1] - start[1];
+            const tlx = predictions[i].topLeft[0];
+            const tly = predictions[i].topLeft[1];
             faceDimensions.push(new FaceData(x,y, tlx, tly))
         }
     }

@@ -1,5 +1,5 @@
-import logo from './logo.svg'
-import './App.css'
+import './App.css';
+
 import Camview from './components/Camview.js'
 import { useListen, useSocketIO } from './utils/effects'
 
