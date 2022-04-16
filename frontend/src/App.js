@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 
 import Camview from './components/Camview.js'
 import { useListen, useSocketIO } from './utils/effects'

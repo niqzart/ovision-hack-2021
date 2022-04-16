@@ -26,7 +26,7 @@ class Camview extends React.Component {
         this.container = React.createRef();
         this.canvas = React.createRef();
         this.image = {
-            intervalMs: 1000,
+            intervalMs: 100,
             timeout: null
         }
     }
@@ -74,7 +74,7 @@ class Camview extends React.Component {
 
     render() {
         return <div className="camera">
-            <button id="button__take">Take photo</button>
+            {/*<button id="button__take">Take photo</button>*/}
             <video id="video" height="480" width="640" ref={this.video}/>
             <div className="image-container" ref={this.container} />
             {/*<canvas id="canvas" height="480" width="640" ref={this.canvas}/>*/}
