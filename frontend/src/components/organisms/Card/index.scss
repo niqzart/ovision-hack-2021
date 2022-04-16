@@ -1,3 +1,22 @@
 .card {
-  background-image: url("../../../assets/card_whole.svg")
+  position: relative;
+  background-image: url("../../../assets/card_whole.svg");
+  height: 350px;
+  width: 500px;
+  background-position: -900px -50px;
+  background-size: 1500px;
+  padding: 10px;
+
+  &__age {
+    position: absolute;
+
+  }
+  &__emotion {
+    position: absolute;
+
+  }
+  &__profile-image {
+    position: absolute;
+
+  }
 }

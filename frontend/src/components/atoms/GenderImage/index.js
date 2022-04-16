@@ -1,10 +1,9 @@
 import React from 'react';
 
-import "./index.scss";
 
 // import femaleLogo from "../../../assets/"
 
-const GenderImage = ({gender}) => {
+const GenderImage = ({gender, className}) => {
     let image_path;
     switch (gender) {
         case "male": {
@@ -23,7 +22,7 @@ const GenderImage = ({gender}) => {
 
     return (
         // <img className="card__gender-image" src="../" />
-        <span>{gender}</span>
+        <span className={className}>{gender}</span>
     );
 }
 

@@ -10,35 +10,35 @@ import "./index.scss";
 const Main = () => {
     return (
         <div className="main-page">
-                <Canvas />
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
-            {/*<Card gender={"male"} age={"22"} emotion={"sad"} key="1" />*/}
+                {/*<Canvas />*/}
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
+            <Card gender={"male"} age={"22"} emotion={"sad"} key="1" />
             {/*<CardList />*/}
         </div>
     )

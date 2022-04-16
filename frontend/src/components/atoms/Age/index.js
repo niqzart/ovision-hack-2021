@@ -1,11 +1,9 @@
 import React from 'react';
 
-import "./index.scss";
 
-
-const Age = ({age}) => {
+const Age = ({age, className}) => {
     return (
-        <span className="card__age">{age}</span>
+        <span className={className}>{age}</span>
     );
 }
 

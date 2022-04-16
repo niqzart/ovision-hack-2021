@@ -1,10 +1,10 @@
 import React from 'react';
 
-import "./index.scss";
 
-
-const ProfileImage = () => {
-
+const ProfileImage = ({className}) => {
+    return(
+        <span className={className}/>
+    )
 }
 
 export default ProfileImage;

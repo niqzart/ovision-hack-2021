@@ -1,11 +1,9 @@
 import React from 'react';
 
-import "./index.scss";
 
-
-const EmotionStatus = ({emotion}) => {
+const EmotionStatus = ({emotion, className}) => {
     return (
-        <span className="card__emotion">{emotion}</span>
+        <span className={className}>{emotion}</span>
     );
 }
 
