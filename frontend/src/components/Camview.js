@@ -17,13 +17,27 @@ class FaceData {
     topLeftY;
 }
 
+async function getTransformedImageFromVideo(image_container, video, width, height) {
+    let faceDimensions = await getFaceCoordinates(video);
+    for (let i = 0; i < faceDimensions.length; ++i) {
+        const iFace = faceDimensions[i];
+        let canvas = document.createElement("canvas");
+        canvas.setAttribute("width", width);
+        canvas.setAttribute("height", height);
+        let context = canvas.getContext("2d");
+        context.drawImage(video, iFace.topLeftX, iFace.topLeftY, iFace.width, iFace.height, 0, 0, width, height);
+        image_container.appendChild(canvas);
+    }
+}
+
+
 async function getFaceCoordinates(video) {
     if (!model) model = await blazeface.load();
     const returnTensors = false;
     const predictions = await model.estimateFaces(video, returnTensors);
     let faceDimensions = [];
     if (predictions.length > 0) {
-        for (let i = 0; i < predictions.length; i++) {
+        for (let i = 0; i < predictions.length; ++i) {
             const start = predictions[i].topLeft;
             const end = predictions[i].bottomRight;
             const x = end[0] - start[0];
@@ -41,8 +55,10 @@ class Camview extends React.Component {
     constructor(props) {
         super(props);
         this.video = React.createRef();
+        this.container = React.createRef();
         this.canvas = React.createRef();
     }
+
 
     handleFaceCoordinates = (event) => {
         getFaceCoordinates(event.target)
@@ -50,11 +66,18 @@ class Camview extends React.Component {
             .catch(e => console.log(e));
     }
 
+    handleButtonClick = () => {
+        getTransformedImageFromVideo(this.container.current, this.video.current, 640, 480)
+            .catch(e => console.log(e));
+    }
+
+
     componentDidMount() {
-        this.video.current.addEventListener('play', this.handleFaceCoordinates, false);
+        // this.video.current.addEventListener('play', this.handleFaceCoordinates, false);
         const object = this;
         navigator.mediaDevices.getUserMedia({video: true, audio: false})
-            .then(function (stream) {
+            .then((stream) => {
+                console.log(stream);
                 object.video.current.srcObject = stream;
                 object.video.current.play();
             })
@@ -64,14 +87,15 @@ class Camview extends React.Component {
     }
 
     componentWillUnmount() {
-        this.video.current.removeEventListener('play', this.handleFaceCoordinates, false);
+        //     this.video.current.removeEventListener('play', this.handleFaceCoordinates, false);
     }
 
     render() {
-        return <div class="camera">
-            <button id="startbutton">Take photo</button>
-            <video id="video" height="480" width="640" ref={this.video}/>
-            <canvas id="canvas" height="480" width="640" ref={this.canvas}/>
+        return <div className="camera">
+            <button id="button__take" onClick={this.handleButtonClick} >Take photo</button>
+            <video id="video" height="480" width="640" onPlay={this.handleFaceCoordinates} ref={this.video}/>
+            <div className="image-container" ref={this.container} />
+            {/*<canvas id="canvas" height="480" width="640" ref={this.canvas}/>*/}
         </div>;
     }
 }
