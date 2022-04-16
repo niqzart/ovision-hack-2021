@@ -1,12 +1,23 @@
-from flask import Flask
+from flask import request
+from flask_socketio import SocketIO
 
-app = Flask(__name__)
+from app import app
+from emitter import send_metadata
+
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
-@app.route("/")
-def hello_world():
-    return "Hello, World!"
+@socketio.on("connect")
+def socket_connect(auth=None):
+    # send_metadata usage example
+    send_metadata(request.sid, {"hey": "world"})
+    print("connected:", auth, request.sid)
+
+
+@socketio.on("disconnect")
+def socket_disconnect():
+    print("disconnected:", request.sid)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app)

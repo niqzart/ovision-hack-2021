@@ -1,3 +1,5 @@
 litter/
 __pycache__
 package-lock.json
+.idea/
+frontend/node_modules

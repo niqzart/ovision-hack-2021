@@ -6,6 +6,8 @@ services:
     build: ./backend
     ports:
       - "5000:5000"
+    volumes: 
+      - /etc/letsencrypt/:/etc/nginx/ssl/:ro
     deploy:
       restart_policy:
         condition: on-failure
@@ -15,6 +17,9 @@ services:
     build: ./frontend
     ports:
       - "80:80"
+      - "443:443"
+    volumes: 
+      - /etc/letsencrypt/:/etc/nginx/ssl/:ro
     environment:
       - PRODUCTION=true
     deploy:
