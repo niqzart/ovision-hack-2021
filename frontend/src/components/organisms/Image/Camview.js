@@ -1,5 +1,5 @@
 import React from 'react';
-import {getFaceCoordinates} from "../modules/face";
+import {getFaceCoordinates} from "../../../modules/face";
 
 
 async function getTransformedImageFromVideo(image_container, video, width, height) {

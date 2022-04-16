@@ -1,6 +1,6 @@
 import './App.scss';
 
-import Camview from './components/Camview.js'
+import Camview from './components/organisms/Image/Camview.js'
 import { useListen, useSocketIO } from './utils/effects'
 
 function AppInner({ socket }) {
