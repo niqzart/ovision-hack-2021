@@ -26,7 +26,7 @@ class Camview extends React.Component {
         this.container = React.createRef();
         this.canvas = React.createRef();
         this.image = {
-            intervalMs: 600,
+            intervalMs: 1000,
             timeout: null
         }
     }
@@ -50,13 +50,16 @@ class Camview extends React.Component {
         }, this.image.intervalMs);
     }
 
-    componentDidMount() {
+     componentDidMount() {
         const object = this;
         navigator.mediaDevices.getUserMedia({video: true, audio: false})
             .then((stream) => {
                 console.log(stream);
                 object.video.current.srcObject = stream;
                 object.video.current.play();
+                getFaceCoordinates(object.video.current)
+                    .then(v => { object.handleRepeatImageDisplay(); }
+)
             })
             .catch(function (err) {
                 console.log("An error occurred there: " + err);
@@ -71,7 +74,7 @@ class Camview extends React.Component {
 
     render() {
         return <div className="camera">
-            <button id="button__take" onClick={this.handleRepeatImageDisplay} >Take photo</button>
+            <button id="button__take">Take photo</button>
             <video id="video" height="480" width="640" ref={this.video}/>
             <div className="image-container" ref={this.container} />
             {/*<canvas id="canvas" height="480" width="640" ref={this.canvas}/>*/}
