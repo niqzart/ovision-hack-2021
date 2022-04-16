@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import io from "socket.io-client"
 
+
 export function useSocketIO() {
   const [socket, setSocket] = useState(null)
 
@@ -13,4 +14,11 @@ export function useSocketIO() {
   }, [setSocket])
 
   return socket
+}
+
+export function useListen(socket, event, handler, deps) {
+  useEffect(() => {
+    socket.on(event, handler)
+    return () => socket.off(event, handler)
+  }, deps)
 }

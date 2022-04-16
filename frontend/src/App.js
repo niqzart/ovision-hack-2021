@@ -5,14 +5,12 @@ import { useSocketIO } from './utils/effects'
 
 
 function AppInner({ socket }) {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Camview />
-      </header>
-    </div>
-  );
+  return <div className="App">
+    <header className="App-header">
+      <img src={logo} className="App-logo" alt="logo" />
+      <Camview />
+    </header>
+  </div>
 }
 
 function App() {
