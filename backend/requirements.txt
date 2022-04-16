@@ -1,4 +1,6 @@
 flask
+numpy
+opencv-python
 gunicorn~=20.1.0
 flask-socketio
 eventlet==0.30.2
