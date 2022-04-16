@@ -18,8 +18,8 @@ class FaceData {
 
 
 export async function getFaceCoordinates(video) {
-    const inc_y = 1.6;
-    const mov_down_y = 0.3
+    const inc_y = 2.0;
+    const mov_down_y = 0.65;
     if (!model) model = await blazeface.load();
     const returnTensors = false;
     const predictions = await model.estimateFaces(video, returnTensors);
