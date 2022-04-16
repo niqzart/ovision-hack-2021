@@ -5,6 +5,10 @@ import {getFaceCoordinates} from "./face";
 import "./index.scss"
 
 
+const canvasLineWidth = "5";
+const canvasStrokeStyle = "green";
+
+
 function scaleChildFitParentMaxWidthOrHeight(child) {
     const parent = child.parentElement;
     const scaleX = parent.clientWidth / child.width;
@@ -15,41 +19,46 @@ function scaleChildFitParentMaxWidthOrHeight(child) {
     child.height *= scalePercent;
 }
 
+const profileImageDim = 150;
 
-async function getTransformedImageFromVideo(canvas_container, video, width, height) {
-    let faceDimensions = await getFaceCoordinates(video);
-    for (let i = faceDimensions.length; i < canvas_container.childElementCount; ++i) {
-        canvas_container.removeChild(canvas_container.children[i]);
+function fillTransformedSegments(container, video, faceDimensions) {
+    for (let i = faceDimensions.length; i < container.childElementCount; ++i) {
+        container.removeChild(container.children[i]);
     }
-    for (let i = canvas_container.childElementCount; i < faceDimensions.length; ++i) {
-        canvas_container.appendChild(document.createElement("canvas"));
+    for (let i = container.childElementCount; i < faceDimensions.length; ++i) {
+        container.appendChild(document.createElement("canvas"));
     }
     for (let i = 0; i < faceDimensions.length; ++i) {
         const iFace = faceDimensions[i];
-        canvas_container.children[i].setAttribute("width", width);
-        canvas_container.children[i].setAttribute("height", height);
-        let context = canvas_container.children[i].getContext("2d");
-        context.drawImage(video, iFace.topLeftX, iFace.topLeftY, iFace.width, iFace.height, 0, 0, width, height);
+        container.children[i].setAttribute("width", profileImageDim);
+        container.children[i].setAttribute("height", profileImageDim);
+        let context = container.children[i].getContext("2d");
+        context.drawImage(video, iFace.topLeftX, iFace.topLeftY, iFace.width, iFace.height,
+            0, 0, profileImageDim, profileImageDim);
     }
 }
 
-async function drawRectangleOnImage(canvas, video, lineWidth, strokeStyle) {
-    const faceDimensions = await getFaceCoordinates(video);
+function drawRectangleVideo(canvas, video, faceDimensions) {
     const vhs = canvas.height / video.videoHeight;
     const vws = canvas.width / video.videoWidth;
-    const context = canvas.getContext("2d");
     scaleChildFitParentMaxWidthOrHeight(canvas);
+    const context = canvas.getContext("2d");
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     for (let i = 0; i < faceDimensions.length; ++i) {
         const iFace = faceDimensions[i];
         context.beginPath();
-        context.strokeStyle=strokeStyle;
-        context.lineWidth =lineWidth;
+        context.strokeStyle=canvasStrokeStyle;
+        context.lineWidth =canvasLineWidth;
         context.rect(iFace.topLeftX * vws, iFace.topLeftY * vhs,iFace.width * vws, iFace.height * vhs);
         context.stroke();
     }
 }
 
+async function processVideo(container, video, canvas) {
+    let faceDimensions = await getFaceCoordinates(video);
+    drawRectangleVideo(canvas, video, faceDimensions)
+    // fillTransformedSegments(container, video, faceDimensions);
+}
 
 
 class Canvas extends React.Component {
@@ -58,26 +67,21 @@ class Canvas extends React.Component {
         this.canvas = React.createRef();
         this.video = React.createRef();
         this.container = React.createRef();
-        this.image = {
+        this.processData = {
             intervalMs: 100,
             timeout: null
         }
     }
 
-    handleFaceCoordinates = (event) => {
-        getFaceCoordinates(event.target)
-            .then(v => console.log(v))
-            .catch(e => console.log(e));
-    }
 
-    handleRepeatCanvasDisplay = () => {
+    handleRepeatCanvasDisplayAndCut = () => {
         this.canvas.current.width = this.video.current.videoWidth;
         this.canvas.current.height = this.video.current.videoHeight;
-        this.image.timeout = setInterval(() => {
-            drawRectangleOnImage(this.canvas.current, this.video.current, "4", "green")
-                .catch(e => console.log(e));
-        }, this.image.intervalMs);
+        this.processData.timeout = setInterval(() => {
+            processVideo(this.container.current, this.video.current, this.canvas.current).catch(e => console.log(e));
+        }, this.processData.intervalMs);
     }
+
 
      componentDidMount() {
         const object = this;
@@ -87,7 +91,9 @@ class Canvas extends React.Component {
                 object.video.current.srcObject = stream;
                 object.video.current.play();
                 getFaceCoordinates(object.video.current)
-                    .then(v => { object.handleRepeatCanvasDisplay(); } )
+                    .then(() => {
+                        object.handleRepeatCanvasDisplayAndCut();
+                    } )
                  })
             .catch(function (err) {
                 console.log("An error occurred there: " + err);
@@ -96,11 +102,12 @@ class Canvas extends React.Component {
 
     componentWillUnmount() {
         this.video.current.pause();
-        clearInterval(this.image.timeout);
+        clearInterval(this.processData.timeout);
     }
 
     render() {
-        return <div className="canvas-container">
+        return <div className="canvas-container" >
+            <div id="container" ref={this.container}/>
             <video id="video" className="canvas-container__video" ref={this.video}/>
             <canvas id="canvas" className="canvas-container__canvas" ref={this.canvas}/>
         </div>;
