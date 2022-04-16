@@ -1,5 +1,8 @@
 import React from 'react';
 
+import "./index.scss";
+
+
 const GenderImage = ({gender}) => {
     let image_path;
     switch (gender) {

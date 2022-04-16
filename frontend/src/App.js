@@ -1,17 +1,16 @@
 import './App.scss';
 
-import Camview from './components/organisms/Image/Camview.js'
-import { useListen, useSocketIO } from './utils/effects'
+import Main from "./components/pages/Main";
+
+import "./components/templates/resets.scss";
 
 function AppInner({ socket }) {
   // useListen usage example:
   useListen(socket, "metadata", (data) => console.log("metadata:", data))
 
-  return <div className="App">
-    <header className="App-header">
-      <Camview />
-    </header>
-  </div>
+  return (
+      <Main />
+  );
 }
 
 function App() {
