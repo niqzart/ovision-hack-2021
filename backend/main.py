@@ -3,7 +3,7 @@ from flask import request
 from app import app
 from flask_socketio import SocketIO
 
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 @socketio.on("connect")
