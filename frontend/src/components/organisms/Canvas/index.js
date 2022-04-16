@@ -19,6 +19,13 @@ function scaleChildFitParentMaxWidthOrHeight(child) {
     child.height *= scalePercent;
 }
 
+function transformIFace(iFace) {
+    let x_center = iFace.topLeftX + iFace.width / 2;
+    let y_center = iFace.topLeftY + iFace.height / 2;
+    let max_dim = Math.max(iFace.width, iFace.height);
+    return {'x': x_center - max_dim / 2, 'y': y_center - max_dim / 2, 'width': max_dim, 'height': max_dim}
+}
+
 const profileImageDim = 200;
 
 function fillTransformedSegments(container, video, faceDimensions) {
@@ -27,7 +34,8 @@ function fillTransformedSegments(container, video, faceDimensions) {
     const context = container.getContext("2d");
     for (let i = 0; i < faceDimensions.length; ++i) {
         const iFace = faceDimensions[i];
-        context.drawImage(video, iFace.topLeftX, iFace.topLeftY, iFace.width, iFace.height,
+        let data = transformIFace(iFace);
+        context.drawImage(video, data['x'], data['y'], data['width'], data['height'],
             0, profileImageDim * i, profileImageDim, profileImageDim);
     }
 }
