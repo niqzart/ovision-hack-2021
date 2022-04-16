@@ -2,7 +2,27 @@
 
 <!-- project info or something here idk --->
 
-## Deploy
+## Running & Deploying
+### Local (backend standalone, debug mode)
+- start the server with (from the `backend` folder)
+```sh
+python main.py
+```
+- or create a run configuration in PyCharm
+
+### Local (frontend standalone)
+- start the server with (from the `frontend` folder)
+```sh
+npm run start
+```
+
+### Local (with docker)
+- to build & start the project (from the project root folder)
+```sh
+docker-compose build
+docker-compose up
+```
+- visit http://localhost/ for frontend or http://localhost:5000/ for backend
 
 ### Server
 - pull & start the server, using latest images (aka images from master):
