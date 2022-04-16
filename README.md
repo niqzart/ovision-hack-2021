@@ -6,6 +6,9 @@
 ### Local (backend standalone, debug mode)
 - start the server with (from the `backend` folder)
 ```sh
+source venv/bin/activate    # linux
+venv/bin/activate           # windows
+venv/Scripts/activate       # PyCharm's thing
 python main.py
 ```
 - or create a run configuration in PyCharm
@@ -27,11 +30,13 @@ docker-compose up
 ### Server
 - pull & start the server, using latest images (aka images from master):
 ```sh
-sh ~/faceprints/deployer.sh
+cd ~/faceprints
+sh ./deployer.sh
 ```
 - pull & start the server, using `brach-name` images:
 ```sh
-env TAG="brach-name" sh ec ~/faceprints/deployer.sh
+cd ~/faceprints
+env TAG="brach-name" sh ec ./deployer.sh
 ```
 - manual pull & start (can be modified)
 ```sh
