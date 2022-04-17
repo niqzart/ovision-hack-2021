@@ -2,7 +2,8 @@ import cv2
 from features import Features
 import time
 import dlib
-import matplotlib.pyplot as plt
+import numpy as np
+import base64
 
 fm = Features()
 
@@ -11,35 +12,19 @@ ds_factor=0.7
 
 
 class Camera(object):
-    # def __init__(self):
-    #     # self.video = cv2.VideoCapture(0)
-    #     self.video = images
-    #
-    # def __del__(self):
-    #     self.video.release()
     
-    def get_frame(self, img):
-        success, image = plt.imread(img)
-        start = time.time()
+    def get_frame(self, image):
+
         frameFace, bboxes = fm.getFaceBox(fm.faceNet, image)
         json_features = self.get_features(bboxes, image)
 
         image=cv2.resize(image,None,fx=ds_factor,fy=ds_factor,interpolation=cv2.INTER_AREA)
         gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
         face_rects=face_cascade.detectMultiScale(gray,1.1,50)
-        print('here!!')
-        # detector = dlib.get_frontal_face_detector()
-        # det = detector(gray, 1)
-        # rects = detector(gray, 1) #[[(348, 134) (669, 455)]]
-        # print('rectsss', rects)
-        # for (x,y,w,h) in face_rects:
         faces = []
         for (i, rect) in enumerate(face_rects):
             frameFace, bboxes = fm.getFaceBox(fm.faceNet, image)
             json_features = self.get_features(bboxes, image)
-            print('rect', rect)
-            # print('det', det)
-            # print('i', i)
 
             left = rect[0]
             top = rect[1]
@@ -51,17 +36,10 @@ class Camera(object):
             json_features.update({'landmarks':shape})
             face_regions = fm.visualize_facial_landmarks(image, rect_landmarks, shape)
             json_features.update(face_regions)
-            # print('face_regions', face_regions)
-            # fm.show_raw_detection(image, det[0], gray, i)
             x, y, w, h = rect
             faces.append(json_features)
-
-            # cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),2)
             break
         ret, jpeg = cv2.imencode('.jpg', image)
-        end = time.time()
-        total = end - start
-        print('total time:', total)
 
         return jpeg.tobytes(), faces
 
@@ -88,4 +66,8 @@ class Camera(object):
             # cv2.imshow("Age Gender Demo", frameFace)
             return {'age':age, 'ageConfidence':agePreds[0].max(), 'gender':gender, 'genderConfidence':genderPreds[0].max()}
 
-
+    def decode_image(self, image):
+        image = image.split(',')[1]
+        nparr = np.frombuffer(base64.b64decode(image), np.uint8)
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        return img

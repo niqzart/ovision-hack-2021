@@ -1,6 +1,7 @@
 flask
 numpy
 dlib
+base64
 imutils
 opencv-python
 matplotlib

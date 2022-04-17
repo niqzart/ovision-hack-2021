@@ -2,26 +2,28 @@ from flask import Flask, render_template, Response
 from camera import Camera
 import json
 
+
 app = Flask(__name__)
 
+camera = Camera()
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
 
-def gen(camera):
-    while True:
-        frame, json_features = camera.get_frame()
-        print(json_features)
-        with open('data.json', 'w') as f:
-            json.dump(str(json_features), f)
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+def gen(img):
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen(Camera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+    img = camera.decode_image(img)
+    frame, json_features = camera.get_frame(img)
+    print(json_features)
+    json_features = json.loads(str(json_features))
+    return json_features
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#
+# @app.route('/video_feed')
+# def video_feed():
+#     return Response(gen(Camera()),
+#                     mimetype='multipart/x-mixed-replace; boundary=frame')
+# 
+# if __name__ == '__main__':
+#     app.run(debug=True)
