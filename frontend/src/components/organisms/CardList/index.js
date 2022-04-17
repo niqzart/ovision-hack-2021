@@ -7,9 +7,13 @@ import "./index.scss";
 import Card from "../Card"
 
 
-const CardList = ({ className, data }) => {
+const CardList = ({ className }) => {
+    
+    const data = useReceiver(socket)
+    const cardsData = dtoToCardList(data);
+
     // data is a list of cards' info
-    const cardList = data.map(card => {
+    const cardList = cardsData.map(card => {
         return <Card className="card-list__card card" age={card.age} gender={card.gender} emotion={card.emotion} key={card.id} />
     });
 

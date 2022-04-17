@@ -17,10 +17,6 @@ const Main = ({className}) => {
     const socket = useSocketIO()
 
     const emitter = new Emitter(socket)
-    const data = useReceiver(socket)
-    const cardsData = dtoToCardList(data);
-
-    print(data, cardsData)
     
     if (socket === null)
         return <div className="main-page main-page__socket-null">
@@ -29,7 +25,7 @@ const Main = ({className}) => {
 
     return (
     <div className="main-page">
-        <CardList className="card-list" data={cardsData} />
+        <CardList className="card-list" />
         <Canvas emitter={emitter} />
     </div>
     );
