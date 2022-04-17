@@ -121,7 +121,7 @@ class Canvas extends React.Component {
         this.container = React.createRef();
         this.state = { faceDimensions: [] }
         this.processData = {
-            intervalMs: 100,
+            intervalMs: 50,
             timeout: null
         }
     }
