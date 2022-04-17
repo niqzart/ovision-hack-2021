@@ -67,7 +67,6 @@ class Camera(object):
             return {'age':age, 'ageConfidence':agePreds[0].max(), 'gender':gender, 'genderConfidence':genderPreds[0].max()}
 
     def decode_image(self, image):
-        image = image.split(',')[1]
-        nparr = np.frombuffer(base64.b64decode(image), np.uint8)
+        nparr = np.frombuffer(base64.b64decode(image[22:]), np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         return img
