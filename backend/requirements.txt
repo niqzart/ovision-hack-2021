@@ -1,6 +1,7 @@
 flask
 numpy
 dlib
+imutils
 opencv-python
 gunicorn~=20.1.0
 flask-socketio
