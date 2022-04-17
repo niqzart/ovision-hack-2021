@@ -1,7 +1,7 @@
 from flask import request
 from flask_socketio import SocketIO
 
-from app import app
+from app import app, gen
 from validator import with_validation
 
 socketio = SocketIO(app, cors_allowed_origins="*", logger=True, engineio_logger=True)
@@ -24,10 +24,7 @@ def stream_one(data):
     if image is None:
         raise ValueError("Image not specified")
 
-    # response = {}
-    response = app.gen(image)
-    print(response)
-    # temp, replace  # noqa
+    response = {}  # temp, replace  # noqa
     # do the machine learning here (pls)
     # preferably in a function in a separate file
     # create the response within that logic and return it to here
@@ -43,7 +40,8 @@ def stream(image: str):
     if not isinstance(image, str):
         raise ValueError("Invalid Image")
 
-    response = []  # temp, replace  # noqa
+    response = gen(image)
+    print(response)
     # do the machine learning here (pls)
     # preferably in a function in a separate file
     # create the response within that logic and return it to here
