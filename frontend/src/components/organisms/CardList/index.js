@@ -9,7 +9,7 @@ import "./index.scss";
 import Card from "../Card"
 
 
-const CardList = ({ className }) => {
+const CardList = ({ className, socket }) => {
     
     const data = useReceiver(socket)
     const cardsData = dtoToCardList(data);

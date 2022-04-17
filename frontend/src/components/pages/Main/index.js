@@ -23,7 +23,7 @@ const Main = ({className}) => {
 
     return (
     <div className="main-page">
-        <CardList className="card-list" />
+        <CardList className="card-list" socket={socket} />
         <Canvas emitter={emitter} />
     </div>
     );
