@@ -26,6 +26,24 @@ function transformIFace(iFace) {
     return {'x': x_center - max_dim / 2, 'y': y_center - max_dim / 2, 'width': max_dim, 'height': max_dim}
 }
 
+function getIoU(iFace1, iFace2) {
+    let s1 = iFace1.width * iFace1.height;
+    let s2 = iFace2.width * iFace2.height;
+    
+    let min_x = Math.max(iFace1.topLeftX, iFace2.topLeftX);
+    let min_y = Math.max(iFace1.topLeftY, iFace2.topLeftY);
+    let max_x = Math.min(iFace1.topLeftX + iFace1.width, iFace2.topLeftX + iFace2.width);
+    let max_y = Math.min(iFace1.topLeftY + iFace1.height, iFace2.topLeftY + iFace2.height);
+
+    let dx = Math.max(max_x - min_x, 0);
+    let dy = Math.max(max_y - min_y, 0);
+
+    let intersect_square = dx * dy;
+    let union_square = s1 + s2 - intersect_square;
+
+    return intersect_square / union_square;
+}
+
 const profileImageDim = 200;
 
 function fillTransformedSegments(container, video, faceDimensions) {
@@ -56,10 +74,40 @@ function drawRectangleVideo(canvas, video, faceDimensions) {
     }
 }
 
-async function processVideo(container, video, canvas) {
+async function processVideo(container, video, canvas, state) {
     let faceDimensions = await getFaceCoordinates(video);
-    drawRectangleVideo(canvas, video, faceDimensions)
-    fillTransformedSegments(container, video, faceDimensions);
+    let integrated = [];
+    let integratedState = [];
+    for (let i = 0; i < faceDimensions.length; ++i) {
+        const iFace = faceDimensions[i];
+        for(let j = 0; j < state.faceDimensions.length; ++j) {
+            const iStateFace = state.faceDimensions[j];
+            let IoU = getIoU(iFace, iStateFace);
+            if(IoU > 0.5) {
+                state.faceDimensions[j] = iFace;
+                integrated.push(i);
+                integratedState.push(j);
+                break
+            }
+        }
+    }
+    for(let i = state.faceDimensions.length - integrated.length - 1; i >= 0; --i) {
+        if(integratedState.includes(i)) {
+            continue;
+        }
+        state.faceDimensions.splice(i);
+        console.log('face out of frame');
+    }
+    for (let i = 0; i < faceDimensions.length; ++i) {
+        if(integrated.includes(i)) {
+            continue;
+        }
+        const iFace = faceDimensions[i];
+        state.faceDimensions.push(iFace);
+        console.log('new face in frame');
+    }
+    drawRectangleVideo(canvas, video, state.faceDimensions)
+    fillTransformedSegments(container, video, state.faceDimensions);
 }
 
 
@@ -69,6 +117,7 @@ class Canvas extends React.Component {
         this.canvas = React.createRef();
         this.video = React.createRef();
         this.container = React.createRef();
+        this.state = {faceDimensions: []}
         this.processData = {
             intervalMs: 100,
             timeout: null
@@ -80,7 +129,7 @@ class Canvas extends React.Component {
         this.canvas.current.width = this.video.current.videoWidth;
         this.canvas.current.height = this.video.current.videoHeight;
         this.processData.timeout = setInterval(() => {
-            processVideo(this.container.current, this.video.current, this.canvas.current).catch(e => console.log(e));
+            processVideo(this.container.current, this.video.current, this.canvas.current, this.state).catch(e => console.log(e));
         }, this.processData.intervalMs);
     }
 
