@@ -17,9 +17,8 @@ const Main = ({className}) => {
     const socket = useSocketIO()
 
     const emitter = new Emitter(socket)
-    // const cardsData = dtoToCardList(useReceiver(socket));
-    const cardsData = dtoToCardList([{"age": "14", "gender": "Female"},{"age": "14", "gender": "Female"},{"age": "14", "gender": "Female"},{"age": "16", "gender": "Female"}])
-
+    const cardsData = dtoToCardList(useReceiver(socket));
+    
     if (socket === null)
         return <div className="main-page main-page__socket-null">
             <span>Loading...</span>
