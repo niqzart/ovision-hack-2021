@@ -145,10 +145,15 @@ class Canvas extends React.Component {
                 getFaceCoordinates(object.video.current)
                     .then(() => {
                         object.handleRepeatCanvasDisplayAndCut();
-                    })
+                    }).catch((err) => {
+                        console.log("An error occurred there: " + err);
+                        if (object.processData.timeout) {
+                            clearInterval(object.processData.timeout);
+                        }
+                })
             })
             .catch(function (err) {
-                // TODO do actual handling
+                object.video.current.pause();
                 console.log("An error occurred there: " + err);
             });
     }

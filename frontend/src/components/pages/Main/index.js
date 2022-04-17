@@ -32,7 +32,7 @@ function Main() {
     const cardsData = useReceiver(socket)
 
     // TODO make this beautiful
-    if (socket === null) return <div>Loading</div>
+    if (socket === null) return <div>Loading...</div>
 
     // TODO error handling!
 
