@@ -35,7 +35,9 @@ const Main = ({className}) => {
 
     // TODO make this beautiful
     if (socket === null)
-        return <div className="main-page main-page__socket-null">Loading...</div>
+        return <div className="main-page main-page__socket-null">
+            <span>Loading...</span>
+        </div>
 
     // TODO error handling!
 
