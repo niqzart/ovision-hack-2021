@@ -21,7 +21,7 @@ reportWebVitals();
 
 
 createCard(new Card(1, 2, 3, 4))
-createCard(new Card(1, 5, 3, 4))
-createCard(new Card(1, 8, 3, 4))
-createCard(new Card(1, 12, 3, 4))
-createCard(new Card(1, 15, 3, 4))
+createCard(new Card(2, 5, 3, 4))
+createCard(new Card(3, 8, 3, 4))
+createCard(new Card(4, 12, 3, 4))
+createCard(new Card(5, 15, 3, 4))
