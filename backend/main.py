@@ -14,7 +14,8 @@ def connect(auth=None):
 
 @socketio.event
 @with_validation(socketio)
-def stream(data):
+def stream_one(data):
+    """ DEPRECATED """
     face_id: int = data.get("face_id", None)
     image: str = data.get("image", None)
 
@@ -30,6 +31,20 @@ def stream(data):
 
     # response message
     response["face_id"] = face_id
+    socketio.emit("metadata", response)
+
+
+@socketio.event
+@with_validation(socketio)
+def stream(image: str):
+    if isinstance(image, str):
+        raise ValueError("Invalid Image")
+
+    response = []  # temp, replace  # noqa
+    # do the machine learning here (pls)
+    # preferably in a function in a separate file
+    # create the response within that logic and return it to here
+
     socketio.emit("metadata", response)
 
 
