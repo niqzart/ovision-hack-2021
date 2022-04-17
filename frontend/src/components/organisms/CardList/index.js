@@ -9,10 +9,7 @@ import Card from "../Card"
 
 const CardList = ({ className, data }) => {
     // data is a list of cards' info
-
-    const cardStore = useStore($cardStore);
-
-    const cardList = cardStore.map(card => {
+    const cardList = data.map(card => {
         return <Card className="card-list__card card" age={card.age} gender={card.gender} emotion={card.emotion} key={card.id} />
     });
 
