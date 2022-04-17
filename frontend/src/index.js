@@ -9,9 +9,7 @@ import Card from "./state/Card";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // remove on production
 root.render(
-  <React.StrictMode>
     <App />
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
