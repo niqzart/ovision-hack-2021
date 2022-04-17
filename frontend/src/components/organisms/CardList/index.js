@@ -1,13 +1,13 @@
 import React from 'react';
 import { useStore } from 'effector-react'
-import {$cardStore} from "../../../state/cardList";
+import {$cardStore} from "../../../state/cardStore";
 
 import "./index.scss";
 
 import Card from "../Card"
 
 
-const CardList = () => {
+const CardList = ({className}) => {
     const cardStore = useStore($cardStore);
 
     const cardList = cardStore.map(card => {
@@ -15,7 +15,7 @@ const CardList = () => {
     });
 
     return(
-        <div id="card-list">
+        <div id="card-list" className={className}>
             {cardList}
         </div>
     )

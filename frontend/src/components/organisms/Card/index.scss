@@ -22,13 +22,13 @@
     position: absolute;
     font-family: "Orbitron", serif;
     bottom: 75px;
-    left: 70px;
+    left: 65px;
     font-size: 1.8em;
     font-weight: bold;
     background-color: deepskyblue;
     border-radius: 20px;
-    padding: 8px 14px;
-    color: #212c36;
+    padding: 8px 14px 6px 14px;
+    color: rgba(33, 44, 54, 0.4);
     text-shadow: #a551d5 0 1px 1px;
     border: 1px solid #a551d5;
   }
@@ -38,6 +38,16 @@
   &__gender-image {
     position: absolute;
     font-family: "Orbitron", serif;
+    top: 55px;
+    left: 65px;
+    font-size: 1.8em;
+    font-weight: bold;
+    background-color: deepskyblue;
+    border-radius: 20px;
+    padding: 8px 14px 6px 14px;
+    color: rgba(33, 44, 54, 0.4);
+    text-shadow: #a551d5 0 1px 1px;
+    border: 1px solid #a551d5;
   }
   &__bodypart-list {
     position: absolute;

@@ -6,12 +6,14 @@ const clearAllCards = createEvent();
 const loadCards = createEvent();
 
 const $cardStore = createStore([])
-// load cards
+    // add new card
+    .on(createCard, (state, card) => {return [...state, card]})
+    // load cards
     .on(loadCards, (state, cards) => { return cards; })
-// clear cards
+    // clear cards
     .on(clearAllCards, (state, cards) => {return []; })
 
 
-export {clearAllCards, loadCards};
+export {clearAllCards, loadCards, createCard};
 export {$cardStore};
 
