@@ -70,6 +70,7 @@ class Camera(object):
                     'genderConfidence': genderPreds[0].max()}
 
     def decode_image(self, image):
-        nparr = np.frombuffer(base64.b64decode(image[22:]), np.uint8)
+        nparr = np.frombuffer(base64.b64decode(image[22:].encode("utf-8")), np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        print(img)
         return img
