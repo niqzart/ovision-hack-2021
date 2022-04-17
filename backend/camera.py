@@ -1,26 +1,27 @@
+import base64
+
 import cv2
-from features import Features
-import time
 import dlib
 import numpy as np
-import base64
+
+from features import Features
 
 fm = Features()
 
-face_cascade=cv2.CascadeClassifier("models/haarcascades.xml")
-ds_factor=0.7
+face_cascade = cv2.CascadeClassifier("models/haarcascades.xml")
+ds_factor = 0.7
 
 
 class Camera(object):
-    
+
     def get_frame(self, image):
 
         frameFace, bboxes = fm.getFaceBox(fm.faceNet, image)
         json_features = self.get_features(bboxes, image)
 
-        image=cv2.resize(image,None,fx=ds_factor,fy=ds_factor,interpolation=cv2.INTER_AREA)
-        gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-        face_rects=face_cascade.detectMultiScale(gray,1.1,50)
+        image = cv2.resize(image, None, fx=ds_factor, fy=ds_factor, interpolation=cv2.INTER_AREA)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        face_rects = face_cascade.detectMultiScale(gray, 1.1, 50)
         faces = []
         for (i, rect) in enumerate(face_rects):
             frameFace, bboxes = fm.getFaceBox(fm.faceNet, image)
@@ -28,12 +29,12 @@ class Camera(object):
 
             left = rect[0]
             top = rect[1]
-            right = left+rect[2]
-            bottom = top+rect[3]
+            right = left + rect[2]
+            bottom = top + rect[3]
             rect_landmarks = dlib.rectangle(left, top, right, bottom)
 
             shape = fm.show_raw_detection(image, rect_landmarks, gray, i)
-            json_features.update({'landmarks':shape})
+            json_features.update({'landmarks': shape})
             face_regions = fm.visualize_facial_landmarks(image, rect_landmarks, shape)
             json_features.update(face_regions)
             x, y, w, h = rect
@@ -46,7 +47,8 @@ class Camera(object):
     def get_features(self, bboxes, frame):
 
         for bbox in bboxes:
-            face = frame[max(0,bbox[1]-fm.padding):min(bbox[3]+fm.padding,frame.shape[0]-1),max(0,bbox[0]-fm.padding):min(bbox[2]+fm.padding, frame.shape[1]-1)]
+            face = frame[max(0, bbox[1] - fm.padding):min(bbox[3] + fm.padding, frame.shape[0] - 1),
+                   max(0, bbox[0] - fm.padding):min(bbox[2] + fm.padding, frame.shape[1] - 1)]
 
             blob = cv2.dnn.blobFromImage(face, 1.0, (227, 227), fm.MODEL_MEAN_VALUES, swapRB=False)
             fm.genderNet.setInput(blob)
@@ -64,7 +66,8 @@ class Camera(object):
             # label = "{},{}".format(gender, age)
             # cv2.putText(frameFace, label, (bbox[0], bbox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2, cv2.LINE_AA)
             # cv2.imshow("Age Gender Demo", frameFace)
-            return {'age':age, 'ageConfidence':agePreds[0].max(), 'gender':gender, 'genderConfidence':genderPreds[0].max()}
+            return {'age': age, 'ageConfidence': agePreds[0].max(), 'gender': gender,
+                    'genderConfidence': genderPreds[0].max()}
 
     def decode_image(self, image):
         nparr = np.frombuffer(base64.b64decode(image[22:]), np.uint8)

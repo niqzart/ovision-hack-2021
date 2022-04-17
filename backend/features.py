@@ -1,11 +1,12 @@
-import numpy as np
 import dlib
-import cv2
-import os
-# from bz2 import decompress
-from urllib.request import urlretrieve
-from imutils import face_utils
 from collections import OrderedDict
+
+import cv2
+import dlib
+# from bz2 import decompress
+from imutils import face_utils
+
+
 # from os.path import dirname, join
 
 
@@ -41,7 +42,6 @@ class Features():
             ("jaw", (0, 17))
         ])
 
-
         faceProto = "models/opencv_face_detector.pbtxt"
         faceModel = "models/opencv_face_detector_uint8.pb"
 
@@ -66,8 +66,6 @@ class Features():
         # name = download()
         # print(name)
         self.landmarks = dlib.shape_predictor('models/shape_predictor_68_face_landmarks_GTX.dat')
-
-
 
     def getFaceBox(self, net, frame, conf_threshold=0.7):
         frameOpencvDnn = frame.copy()
@@ -112,11 +110,10 @@ class Features():
         # loop over the (x, y)-coordinates for the facial landmarks
         # and draw them on the image
         # for (x, y) in shape:
-            # cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            # cv2.circle(image, (x - w, y - h), 1, (0, 0, 255), -1)
-            # cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
+        # cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        # cv2.circle(image, (x - w, y - h), 1, (0, 0, 255), -1)
+        # cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
         return shape
-
 
     def visualize_facial_landmarks(self, img, landmarks, shape):
         # create two copies of the input image -- one for the
@@ -128,13 +125,13 @@ class Features():
         # color for each facial landmark region
         # if colors is None:
         colors = [(19, 199, 109), (79, 76, 240), (230, 159, 23),
-            (168, 100, 168), (158, 163, 32),
-            (163, 38, 32), (180, 42, 220), (0, 0, 255)]
+                  (168, 100, 168), (158, 163, 32),
+                  (163, 38, 32), (180, 42, 220), (0, 0, 255)]
         #
         # # loop over the facial landmark regions individually
         for (i, name) in enumerate(self.FACIAL_LANDMARKS_68_IDXS.keys()):
-        #     # grab the (x, y)-coordinates associated with the
-        #     # face landmark
+            #     # grab the (x, y)-coordinates associated with the
+            #     # face landmark
             (j, k) = self.FACIAL_LANDMARKS_68_IDXS[name]
             pts = shape[j:k]
 
@@ -156,7 +153,7 @@ class Features():
             hull = cv2.convexHull(pts)
             # cv2.drawContours(img, [hull], -1, colors[i], -1)
             # print('img, [hull], -1, colors[i], -1', img, [hull], -1, colors[i], -1)
-            face_regions = {'faceRegion':[hull], 'faceRegionColor':colors[i], 'faceRegionName':name, 'jawLine':jaw}
+            face_regions = {'faceRegion': [hull], 'faceRegionColor': colors[i], 'faceRegionName': name, 'jawLine': jaw}
 
         # apply the transparent overlay
         # cv2.addWeighted(img, 0.70, output, 1 - 0.7, 0, output)

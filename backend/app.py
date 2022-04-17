@@ -1,18 +1,20 @@
-from flask import Flask, render_template, Response
-from camera import Camera
 import json
 
+from flask import Flask
+
+from camera import Camera
 
 app = Flask(__name__)
 
 camera = Camera()
 
+
 # @app.route('/')
 # def index():
 #     return render_template('index.html')
 
-def gen(img):
 
+def gen(img):
     img = camera.decode_image(img)
     frame, json_features = camera.get_frame(img)
     print(json_features)
