@@ -6,7 +6,8 @@ export function useSocketIO() {
   const [socket, setSocket] = useState(null)
 
   useEffect(() => {
-    const socket = io(`https://${window.location.hostname}:5000`)
+    console.log(`Attempting connection to ${window.location.protocol}//${window.location.hostname}:5000`)
+    const socket = io(`${window.location.protocol}//${window.location.hostname}:5000`)
     socket.on("connect", () => console.log("sio connected", socket.id))
     socket.on("disconnect", () => console.log("sio disconnected", socket.id))
     setSocket(socket)
@@ -16,11 +17,12 @@ export function useSocketIO() {
   return socket
 }
 
-export function useListen(socket, event, handler, deps) {
+export function useListen(socket, event, deps, handler) {
   useEffect(() => {
     if (socket) {
+      console.log("Listening for", event)
       socket.on(event, handler)
       return () => socket.off(event, handler)
     }
-  }, deps)
+  }, [socket, event, handler, ...deps])
 }
