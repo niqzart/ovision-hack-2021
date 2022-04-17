@@ -31,6 +31,7 @@ class Camera(object):
         # rects = detector(gray, 1) #[[(348, 134) (669, 455)]]
         # print('rectsss', rects)
         # for (x,y,w,h) in face_rects:
+        faces = []
         for (i, rect) in enumerate(face_rects):
             frameFace, bboxes = fm.getFaceBox(fm.faceNet, image)
             json_features = self.get_features(bboxes, image)
@@ -51,6 +52,7 @@ class Camera(object):
             # print('face_regions', face_regions)
             # fm.show_raw_detection(image, det[0], gray, i)
             x, y, w, h = rect
+            faces.append(json_features)
 
             cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),2)
             break
@@ -59,7 +61,7 @@ class Camera(object):
         total = end - start
         print('total time:', total)
 
-        return jpeg.tobytes(), json_features
+        return jpeg.tobytes(), faces
 
     def get_features(self, bboxes, frame):
 

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Response
 from camera import Camera
-
+import json
 
 app = Flask(__name__)
 
@@ -13,6 +13,8 @@ def gen(camera):
     while True:
         frame, json_features = camera.get_frame()
         print(json_features)
+        with open('data.json', 'w') as f:
+            json.dump(str(json_features), f)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
