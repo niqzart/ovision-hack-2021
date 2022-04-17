@@ -11,7 +11,7 @@ const CardList = ({className}) => {
     const cardStore = useStore($cardStore);
 
     const cardList = cardStore.map(card => {
-        return <Card age={card.age} gender={card.gender} emotion={card.emotion} key={card.id}/>
+        return <Card className="card-list__card card" age={card.age} gender={card.gender} emotion={card.emotion} key={card.id}/>
     });
 
     return(

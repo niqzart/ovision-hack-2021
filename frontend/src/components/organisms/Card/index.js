@@ -9,9 +9,9 @@ import "./index.scss";
 import BodypartList from "../../molecules/BodypartList";
 
 
-const Card = ({profileImage, gender, emotion, age}) => {
+const Card = ({profileImage, gender, emotion, age, className}) => {
     return (
-        <div className="card">
+        <div className={className}>
             <Age className="card__age" age={age} />
             <EmotionStatus className="card__emotion" emotion={emotion} />
             <GenderImage className="card__gender-image" gender={gender} />

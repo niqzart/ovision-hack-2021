@@ -12,5 +12,19 @@
   }
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+
+  &__card {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+      transition: opacity .25s ease-in-out;
+      -moz-transition: opacity .25s ease-in-out;
+      -webkit-transition: opacity .25s ease-in-out;
+    }
+  }
 }
 
+.card-list.reduced-opacity {
+  transition-duration: 300ms;
+  opacity: 0.5;
+}
