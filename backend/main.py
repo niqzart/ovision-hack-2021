@@ -37,7 +37,7 @@ def stream_one(data):
 @socketio.event
 @with_validation(socketio)
 def stream(image: str):
-    if isinstance(image, str):
+    if not isinstance(image, str):
         raise ValueError("Invalid Image")
 
     response = []  # temp, replace  # noqa
