@@ -6,6 +6,7 @@ import Canvas from "../../organisms/Canvas"
 import CardList from "../../organisms/CardList"
 
 import "./index.scss"
+import {dtoToCardList} from "../../../state/Card";
 
 function MainMobileLayout({ data, emitter }) {
     // TODO edit this!
@@ -23,22 +24,23 @@ function MainDesktopLayout({ data, emitter }) {
     </div>
 }
 
-function Main() {
+const Main = ({className}) => {
     const width = useWindowSize()[0]
 
     const socket = useSocketIO()
 
     const emitter = new Emitter(socket)
-    const cardsData = useReceiver(socket)
+    const cardsData = dtoToCardList(useReceiver(socket));
 
     // TODO make this beautiful
-    if (socket === null) return <div>Loading...</div>
+    if (socket === null)
+        return <div className="main-page main-page__socket-null">Loading...</div>
 
     // TODO error handling!
 
     return width < 500
-        ? <MainMobileLayout emitter={emitter} data={cardsData} />
-        : <MainDesktopLayout emitter={emitter} data={cardsData} />
+        ? <MainMobileLayout className="mobile-layout" emitter={emitter} data={cardsData} />
+        : <MainDesktopLayout className="desktop-layout" emitter={emitter} data={cardsData} />
 }
 
 export default Main;

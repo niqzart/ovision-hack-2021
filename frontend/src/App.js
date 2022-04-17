@@ -4,7 +4,7 @@ import './App.scss';
 
 
 function App() {
-  return <Main />
+  return <Main className="main-page" />
 }
 
 export default App
