@@ -36,7 +36,9 @@ function Main() {
 
     // TODO error handling!
 
-    return width < 500 ? <MainMobileLayout /> : <MainDesktopLayout />
+    return width < 500
+        ? <MainMobileLayout emitter={emitter} data={cardsData} />
+        : <MainDesktopLayout emitter={emitter} data={cardsData} />
 }
 
 export default Main;
