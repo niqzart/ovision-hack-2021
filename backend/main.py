@@ -15,8 +15,13 @@ def connect(auth=None):
 @socketio.event
 @with_validation(socketio)
 def stream(data):
-    face_id: int = data["face_id"]
-    image: str = data["image"]
+    face_id: int = data.get("face_id", None)
+    image: str = data.get("image", None)
+
+    if face_id is None:
+        raise ValueError("FaceID not specified")
+    if image is None:
+        raise ValueError("Image not specified")
 
     response = {}  # temp, replace  # noqa
     # do the machine learning here (pls)
