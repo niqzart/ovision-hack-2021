@@ -1,6 +1,8 @@
 import React from "react";
 import { useStore } from "effector-react"
 import { $cardStore } from "../../../state/cardStore";
+import useReceiver from "../../../utils/receiver"
+import {dtoToCardList} from "../../../state/Card";
 
 import "./index.scss";
 

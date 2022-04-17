@@ -1,12 +1,10 @@
 import { useSocketIO, useWindowSize } from "../../../utils/effects"
-import useReceiver from "../../../utils/receiver"
 import Emitter from "../../../utils/emitter"
 
 import Canvas from "../../organisms/Canvas"
 import CardList from "../../organisms/CardList"
 
 import "./index.scss"
-import {dtoToCardList} from "../../../state/Card";
 
 
 function MainDesktopLayout({ data, emitter }) {
