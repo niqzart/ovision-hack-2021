@@ -2,6 +2,7 @@ import cv2
 from features import Features
 import time
 import dlib
+import matplotlib.pyplot as plt
 
 fm = Features()
 
@@ -10,14 +11,15 @@ ds_factor=0.7
 
 
 class Camera(object):
-    def __init__(self):
-        self.video = cv2.VideoCapture(0)
+    # def __init__(self):
+    #     # self.video = cv2.VideoCapture(0)
+    #     self.video = images
+    #
+    # def __del__(self):
+    #     self.video.release()
     
-    def __del__(self):
-        self.video.release()
-    
-    def get_frame(self, ):
-        success, image = self.video.read()
+    def get_frame(self, img):
+        success, image = plt.imread(img)
         start = time.time()
         frameFace, bboxes = fm.getFaceBox(fm.faceNet, image)
         json_features = self.get_features(bboxes, image)
@@ -54,7 +56,7 @@ class Camera(object):
             x, y, w, h = rect
             faces.append(json_features)
 
-            cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),2)
+            # cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),2)
             break
         ret, jpeg = cv2.imencode('.jpg', image)
         end = time.time()

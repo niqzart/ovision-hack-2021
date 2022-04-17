@@ -24,7 +24,10 @@ def stream_one(data):
     if image is None:
         raise ValueError("Image not specified")
 
-    response = {}  # temp, replace  # noqa
+    # response = {}
+    response = app.gen(image)
+    print(response)
+    # temp, replace  # noqa
     # do the machine learning here (pls)
     # preferably in a function in a separate file
     # create the response within that logic and return it to here

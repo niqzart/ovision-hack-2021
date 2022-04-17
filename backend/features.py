@@ -65,7 +65,7 @@ class Features():
         # self.padding = 0
         # name = download()
         # print(name)
-        self.landmarks = dlib.shape_predictor('shape_predictor_68_face_landmarks_GTX.dat')
+        self.landmarks = dlib.shape_predictor('models/shape_predictor_68_face_landmarks_GTX.dat')
 
 
 
@@ -103,18 +103,18 @@ class Features():
         # [i.e., (x, y, w, h)], then draw the face bounding box
         (x, y, w, h) = face_utils.rect_to_bb(rect)
 
-        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        # cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
         # show the face number
-        cv2.putText(image, "Face #{}".format(i + 1), (x - 10, y - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        # cv2.putText(image, "Face #{}".format(i + 1), (x - 10, y - 10),
+        #             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
         # loop over the (x, y)-coordinates for the facial landmarks
         # and draw them on the image
-        for (x, y) in shape:
+        # for (x, y) in shape:
             # cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
             # cv2.circle(image, (x - w, y - h), 1, (0, 0, 255), -1)
-            cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
+            # cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
         return shape
 
 
@@ -146,7 +146,7 @@ class Features():
                 for l in range(1, len(pts)):
                     ptA = tuple(pts[l - 1])
                     ptB = tuple(pts[l])
-                    cv2.line(img, ptA, ptB, colors[i], 2)
+                    # cv2.line(img, ptA, ptB, colors[i], 2)
                     # print('ptA, ptB, colors[i], 2', ptA, ptB, colors[i], 2)
                     jaw.append([ptA, ptB])
 
@@ -154,12 +154,12 @@ class Features():
             # landmark coordinates points and display it
             # else:
             hull = cv2.convexHull(pts)
-            cv2.drawContours(img, [hull], -1, colors[i], -1)
+            # cv2.drawContours(img, [hull], -1, colors[i], -1)
             # print('img, [hull], -1, colors[i], -1', img, [hull], -1, colors[i], -1)
-            face_regions = {'faceRegion':[hull], 'faceRegionColor':colors[i], 'jawLine':jaw}
+            face_regions = {'faceRegion':[hull], 'faceRegionColor':colors[i], 'faceRegionName':name, 'jawLine':jaw}
 
         # apply the transparent overlay
-        cv2.addWeighted(img, 0.70, output, 1 - 0.7, 0, output)
+        # cv2.addWeighted(img, 0.70, output, 1 - 0.7, 0, output)
 
         # return the output image
         return face_regions
