@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 
-const Age = ({age, className}) => {
+const Age = ({ age, className }) => {
     return (
         <span className={className}>{age}</span>
     );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import { getFaceCoordinates } from "./face";
 
@@ -23,7 +23,7 @@ function transformIFace(iFace) {
     let x_center = iFace.topLeftX + iFace.width / 2;
     let y_center = iFace.topLeftY + iFace.height / 2;
     let max_dim = Math.max(iFace.width, iFace.height);
-    return { 'x': x_center - max_dim / 2, 'y': y_center - max_dim / 2, 'width': max_dim, 'height': max_dim }
+    return { "x": x_center - max_dim / 2, "y": y_center - max_dim / 2, "width": max_dim, "height": max_dim }
 }
 
 function getIoU(iFace1, iFace2) {
@@ -53,7 +53,7 @@ function fillTransformedSegments(container, video, faceDimensions) {
     for (let i = 0; i < faceDimensions.length; ++i) {
         const iFace = faceDimensions[i];
         let data = transformIFace(iFace);
-        context.drawImage(video, data['x'], data['y'], data['width'], data['height'],
+        context.drawImage(video, data["x"], data["y"], data["width"], data["height"],
             0, profileImageDim * i, profileImageDim, profileImageDim);
     }
 }
@@ -96,7 +96,7 @@ async function processVideo(container, video, canvas, state, emitter) {
             continue;
         }
         state.faceDimensions.splice(i);
-        console.log('face out of frame');
+        console.log("face out of frame");
     }
     for (let i = 0; i < faceDimensions.length; ++i) {
         if (integrated.includes(i)) {
@@ -104,7 +104,7 @@ async function processVideo(container, video, canvas, state, emitter) {
         }
         const iFace = faceDimensions[i];
         state.faceDimensions.push(iFace);
-        console.log('new face in frame');
+        console.log("new face in frame");
     }
     fillTransformedSegments(container, video, state.faceDimensions);
     emitter.emitFrame(canvas)
@@ -126,7 +126,6 @@ class Canvas extends React.Component {
         }
     }
 
-
     handleRepeatCanvasDisplayAndCut = () => {
         this.canvas.current.width = this.video.current.videoWidth;
         this.canvas.current.height = this.video.current.videoHeight;
@@ -135,7 +134,6 @@ class Canvas extends React.Component {
                 .catch(e => console.log(e));
         }, this.processData.intervalMs);
     }
-
 
     componentDidMount() {
         const object = this;
@@ -150,6 +148,7 @@ class Canvas extends React.Component {
                     })
             })
             .catch(function (err) {
+                // TODO do actual handling
                 console.log("An error occurred there: " + err);
             });
     }

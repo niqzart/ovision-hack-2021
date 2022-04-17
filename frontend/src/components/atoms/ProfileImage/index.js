@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 
-const ProfileImage = ({className}) => {
-    return(
-        <span className={className}/>
+const ProfileImage = ({ className }) => {
+    return (
+        <span className={className} />
     )
 }
 

@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 
 
 // import femaleLogo from "../../../assets/"
 
-const GenderImage = ({gender, className}) => {
+const GenderImage = ({ gender, className }) => {
     let image_path;
     switch (gender) {
         case "male": {
             image_path = "../";
             break;
         }
-        case "female" : {
+        case "female": {
             image_path = "path-2"
             break
         }

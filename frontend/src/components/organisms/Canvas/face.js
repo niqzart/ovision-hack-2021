@@ -1,5 +1,5 @@
-import * as tf from '@tensorflow/tfjs'
-const blazeface = require('@tensorflow-models/blazeface');
+import * as tf from "@tensorflow/tfjs"
+const blazeface = require("@tensorflow-models/blazeface");
 
 let model;
 
@@ -32,7 +32,7 @@ export async function getFaceCoordinates(video) {
             const y = (end[1] - start[1]) * inc_y;
             const tlx = start[0];
             const tly = (start[1]) - (y * (inc_y - 1 - mov_down_y));
-            faceDimensions.push(new FaceData(x,y, tlx, tly))
+            faceDimensions.push(new FaceData(x, y, tlx, tly))
         }
     }
     return faceDimensions;

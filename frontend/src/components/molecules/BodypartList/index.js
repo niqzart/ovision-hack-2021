@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 import "./index.scss";
 
-const BodypartList = ({className}) => {
+const BodypartList = ({ className }) => {
     return (
         <div className={className}>
             <span>eyes</span>

@@ -1,12 +1,11 @@
-import React from 'react';
 import { useSocketIO, useWindowSize } from "../../../utils/effects"
-import Emitter from "../../../utils/emitter"
 import useReceiver from "../../../utils/receiver"
+import Emitter from "../../../utils/emitter"
 
-import Canvas from "../../organisms/Canvas";
-import CardList from "../../organisms/CardList";
+import Canvas from "../../organisms/Canvas"
+import CardList from "../../organisms/CardList"
 
-import "./index.scss";
+import "./index.scss"
 
 function MainMobileLayout({ data, emitter }) {
     // TODO edit this!
@@ -24,7 +23,7 @@ function MainDesktopLayout({ data, emitter }) {
     </div>
 }
 
-const Main = () => {
+function Main() {
     const width = useWindowSize()[0]
 
     const socket = useSocketIO()

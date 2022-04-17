@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 
-const EmotionStatus = ({emotion, className}) => {
+const EmotionStatus = ({ emotion, className }) => {
     return (
         <span className={className}>{emotion}</span>
     );
