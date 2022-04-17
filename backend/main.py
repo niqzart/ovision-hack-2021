@@ -41,7 +41,7 @@ def stream(image: str):
         raise ValueError("Invalid Image")
 
     response = gen(image)
-    print(response)
+    print('response:', response)
     # do the machine learning here (pls)
     # preferably in a function in a separate file
     # create the response within that logic and return it to here
