@@ -31,6 +31,7 @@ const Main = ({className}) => {
 
     const emitter = new Emitter(socket)
     const cardsData = dtoToCardList(useReceiver(socket));
+    // const cardsData = dtoToCardList([{"age": "14", "gender": "Female"},{"age": "16", "gender": "Female"}])
 
     // TODO make this beautiful
     if (socket === null)
