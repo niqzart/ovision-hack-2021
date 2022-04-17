@@ -45,7 +45,7 @@ def stream(image: str):
     # preferably in a function in a separate file
     # create the response within that logic and return it to here
 
-    socketio.emit("metadata", response)
+    socketio.emit("metadata", response, room=request.sid)
 
 
 @socketio.event
